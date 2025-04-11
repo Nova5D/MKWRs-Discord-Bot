@@ -45,10 +45,18 @@ def findWR(dictID, ccInput):
     targetTime = wr_data.loc[(wr_data.track_id == dictID) & (wr_data.cc == ccInput) & (wr_data.is_current == 1)]
     return targetTime.iloc[0]
 
+#Check if the WR is tied and store it. Currently only works for 2-way ties
+def findTiedWR(dictID, ccInput):
+    wr1 = findWR(dictID, ccInput)
+    targetTime0 = wr_data.loc[(wr_data.track_id == dictID) & (wr_data.cc == ccInput) & (wr_data.is_current == 1) & (wr_data.wr_id != wr1[0])]
+    if not targetTime0.empty:
+        return targetTime0.iloc[0]
+    else:
+        return targetTime0
+
 #Displaying the time correctly
 def createTime(wr):
-    timeValue = wr[4]
-    timeValueStr = str(timeValue)
+    timeValueStr = str(wr[4])
 
     if len(timeValueStr) == 5:
         minStr = timeValueStr[0:2]
@@ -77,12 +85,26 @@ def createLink(wr):
 #Simple display of time, player, country and link
 def slashWR(dictID, ccInput):
     wr = findWR(dictID, ccInput)
-    print(
-        createTime(wr),"by",
-        wr[1],"("+
-        wr[6]+")",
-        createLink(wr)
-        )
+    wr0 = findTiedWR(dictID, ccInput)
+    if wr0.empty:
+        print(
+            createTime(wr),"by",
+            wr[1],"("+
+            wr[6]+")",
+            createLink(wr)
+            )
+    #If the WR is tied:
+    else:
+        print(
+            createTime(wr0),"by",
+            wr0[1],"("+
+            wr0[6]+")"+
+            createLink(wr0),"and",
+            wr[1],"("+
+            wr[6]+")"+
+            createLink(wr)
+            )
+
 
 #More complex display with all the other info
 #Choosing whether to write "day" or "days"
@@ -112,23 +134,60 @@ def createControls(wr):
 #Printing the info
 def slashWI(dictID, ccInput):
     wr = findWR(dictID, ccInput)
-    print(
-        createTime(wr),"by",
-        wr[1],"("+
-        wr[6]+")"+
-        createLink(wr)+"\n"+
-        "Date:",wr[2]+"\n"+
-        "Duration:",createDuration(wr)+"\n"+
-        "Splits:",createSplits(wr)+"\n"+
-        "Mushrooms:",wr[9]+"\n"+
-        "Coins:",wr[8]+"\n"+
-        "Combo:",
-            wr[15],"-",
-            wr[10],"-",
-            wr[11],"-",
-            wr[13]+"\n"+
-        "Motion:",createControls(wr)
-        )
+    wr0 = findTiedWR(dictID, ccInput)
+    if wr0.empty:
+        print(
+            createTime(wr),"by",
+            wr[1],"("+
+            wr[6]+")"+
+            createLink(wr)+"\n"+
+            "Date:",wr[2]+"\n"+
+            "Duration:",createDuration(wr)+"\n"+
+            "Splits:",createSplits(wr)+"\n"+
+            "Mushrooms:",wr[9]+"\n"+
+            "Coins:",wr[8]+"\n"+
+            "Combo:",
+                wr[15],"-",
+                wr[10],"-",
+                wr[11],"-",
+                wr[13]+"\n"+
+            "Motion:",createControls(wr)
+            )
+    #If the WR is tied:
+    else:
+        print(
+            createTime(wr0),"by",
+            wr0[1],"("+
+            wr0[6]+")"+
+            createLink(wr0),"and",
+            wr[1],"("+
+            wr[6]+")"+
+            createLink(wr)+"\n"+
+            wr0[1]+":\n"+
+                "   Date:",wr0[2]+"\n"+
+                "   Duration:",createDuration(wr0)+"\n"+
+                "   Splits:",createSplits(wr0)+"\n"+
+                "   Mushrooms:",wr0[9]+"\n"+
+                "   Coins:",wr0[8]+"\n"+
+                "   Combo:",
+                    wr0[15],"-",
+                    wr0[10],"-",
+                    wr0[11],"-",
+                    wr0[13]+"\n"+
+                "   Motion:",createControls(wr0)+"\n"+
+            wr[1]+":\n"+
+                "   Date:",wr[2]+"\n"+
+                "   Duration:",createDuration(wr)+"\n"+
+                "   Splits:",createSplits(wr)+"\n"+
+                "   Mushrooms:",wr[9]+"\n"+
+                "   Coins:",wr[8]+"\n"+
+                "   Combo:",
+                    wr[15],"-",
+                    wr[10],"-",
+                    wr[11],"-",
+                    wr[13]+"\n"+
+                "   Motion:",createControls(wr)
+                )
 
 #Ask for track abbreviation and speed
 def main():

@@ -96,13 +96,13 @@ def slashWR(dictID, ccInput):
     #If the WR is tied:
     else:
         print(
-            createTime(wr0),"by",
-            wr0[1],"("+
-            wr0[6]+")"+
-            createLink(wr0),"and",
+            createTime(wr),"by",
             wr[1],"("+
             wr[6]+")"+
-            createLink(wr)
+            createLink(wr),"and",
+            wr0[1],"("+
+            wr0[6]+")"+
+            createLink(wr0)
             )
 
 
@@ -156,25 +156,13 @@ def slashWI(dictID, ccInput):
     #If the WR is tied:
     else:
         print(
-            createTime(wr0),"by",
-            wr0[1],"("+
-            wr0[6]+")"+
-            createLink(wr0),"and",
+            createTime(wr),"by",
             wr[1],"("+
             wr[6]+")"+
-            createLink(wr)+"\n"+
-            wr0[1]+":\n"+
-                "   Date:",wr0[2]+"\n"+
-                "   Duration:",createDuration(wr0)+"\n"+
-                "   Splits:",createSplits(wr0)+"\n"+
-                "   Mushrooms:",wr0[9]+"\n"+
-                "   Coins:",wr0[8]+"\n"+
-                "   Combo:",
-                    wr0[15],"-",
-                    wr0[10],"-",
-                    wr0[11],"-",
-                    wr0[13]+"\n"+
-                "   Motion:",createControls(wr0)+"\n"+
+            createLink(wr),"and",
+            wr0[1],"("+
+            wr0[6]+")"+
+            createLink(wr0)+"\n"+
             wr[1]+":\n"+
                 "   Date:",wr[2]+"\n"+
                 "   Duration:",createDuration(wr)+"\n"+
@@ -186,7 +174,19 @@ def slashWI(dictID, ccInput):
                     wr[10],"-",
                     wr[11],"-",
                     wr[13]+"\n"+
-                "   Motion:",createControls(wr)
+                "   Motion:",createControls(wr)+"\n"+
+            wr0[1]+":\n"+
+                "   Date:",wr0[2]+"\n"+
+                "   Duration:",createDuration(wr0)+"\n"+
+                "   Splits:",createSplits(wr0)+"\n"+
+                "   Mushrooms:",wr0[9]+"\n"+
+                "   Coins:",wr0[8]+"\n"+
+                "   Combo:",
+                    wr0[15],"-",
+                    wr0[10],"-",
+                    wr0[11],"-",
+                    wr0[13]+"\n"+
+                "   Motion:",createControls(wr0)
                 )
 
 #Ask for track abbreviation and speed

@@ -11,6 +11,7 @@ wr_data = pd.read_csv(
            'controls', 'lap4', 'lap5', 'lap6', 'lap7', 'cc'],
     header=None
 )
+wr_data = wr_data.sort_values(by=['wr_id'])
 
 #Idk if there's a better way to implement this
 abbrevKey = {

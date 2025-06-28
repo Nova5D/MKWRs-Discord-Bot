@@ -1,4 +1,4 @@
-#An implementation of the WR info command using user input. Thanks to Jimmy for helping me with this.
+#An implementation of the MK8DX WR info command using user input. Thanks to Jimmy for helping me with this.
 import pandas as pd
 
 #The below variable comes from Jimmy's WRless parts script
@@ -13,7 +13,7 @@ wr_data = pd.read_csv(
 )
 wr_data = wr_data.sort_values(by=['wr_id'])
 
-#Idk if there's a better way to implement this
+#Dictionary of track abbreviations
 abbrevKey = {
   "MKS": 1,"WP":   2,"SSC":  3,"TR":   4,
   "MC":  5,"TH":   6,"TM":   7,"SGF":  8,
@@ -58,13 +58,10 @@ def findTiedWR(dictID, ccInput):
 #Displaying the time correctly
 def createTime(wr):
     timeValueStr = str(wr[4])
+    len_tVS = len(timeValueStr)
 
-    if len(timeValueStr) == 5:
-        minStr = timeValueStr[0:2]
-        msDisplay = timeValueStr[2:5]
-    elif len(timeValueStr) == 6:
-        minStr = timeValueStr[0:3]
-        msDisplay = timeValueStr[3:6]
+    minStr = timeValueStr[0:(len_tVS // 2)]
+    msDisplay = timeValueStr[(len_tVS // 2):len_tVS]
     
     minInt = int(minStr)
     minDivInt = minInt // 60
@@ -91,7 +88,7 @@ def slashWR(dictID, ccInput):
         print(
             createTime(wr),"by",
             wr[1],"("+
-            wr[6]+")",
+            wr[6]+")"+
             createLink(wr)
             )
     #If the WR is tied:

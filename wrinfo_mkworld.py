@@ -15,14 +15,16 @@ wr_data = wr_data.sort_values(by=['wr_id'])
 
 #Dictionary of track abbreviations
 abbrevKey = {
-  "MBC": 1,"CC":   2,"WS":   3,"DKS":  4,
-  "RDH": 5,"RSGB": 6,"RWST": 7,"RAF":  8,
-  "RDKP":9,"SP":   10,"RSHS":11,"RWSH":12,
-  "RKTB":13,"FO":  14,"PS":  15,"RPB": 16,
-  "SSS": 17,"RDDJ":18,"GBR": 19,"CCF": 20,
-  "DD":  21,"BCN": 22,"DBB": 23,"RMMM":24,
-  "RCM": 25,"RTF": 26,"BCT": 27,"AH":  28,
-  "RMC": 29,"RR":  30
+  "MBC":  1, "CC":   2, "WS":   3, "DKS":  4,
+  "RDH":  5, "RSGB": 6, "RWS":  7, "RAF":  8,
+  "RDKP": 9, "SP":  10, "RSHS":11, "RWSH":12,
+  "RKTB":13, "FO":  14, "PS":  15, "RPB": 16,
+  "SSS": 17, "RDDJ":18, "GBR": 19, "CCF": 20,
+  "DD":  21, "BCI": 22, "DBB": 23, "RMMM":24,
+  "RCM": 25, "RTF": 26, "BC":  27, "AH":  28,
+  "RMC": 29, "RR":  30, "RMC1":31, "RMC2":32,
+  "RMC3":33, "RGV1":34, "RGV2":35, "RGV3":36,
+  "RCI1":37, "RCI2":38, "RKB1":39, "RVL1":40
 }
 
 #Find the WR based on input
@@ -95,12 +97,12 @@ def createDuration(wr):
     else:
         return str(wr[14])+" days"
 
-#Creating variables for splits first because RR, rKTB and DKS exist
+#Creating variables for splits first because RR, rKTB, all the SNES tracks, and DKS exist
 def createSplits(wr):
     splits = wr[16]+" - "+wr[17]+" - "+wr[18]
-    if wr[5] == 4 or wr[5] == 13 or wr[5] == 30:
+    if wr[5] == 4 or wr[5] == 13 or wr[5] == 30 or (wr[5] > 30 and wr[5] < 41):
         splits += " - "+wr[21]
-        if wr[5] == 4 or wr[5] == 13:
+        if wr[5] == 4 or wr[5] == 13 or (wr[5] > 30 and wr[5] < 41):
             splits += " - "+wr[22]
             if wr[5] == 4:
                 splits += " - "+wr[23]
